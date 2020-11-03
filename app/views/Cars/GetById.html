@@ -1,0 +1,28 @@
+{{set . "title" "Home"}}
+{{template "header.html" .}}
+<head>
+    <meta charset="UTF-8">
+    <title>Detail</title>
+</head>
+<body>
+    {{range $item := .car}}
+        <div class="form-group">
+            <label>ID</label>
+            <input type="text" class="form-control" disabled value="{{$item.ID}}">
+        </div>
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" class="form-control" disabled value="{{$item.Name}}">
+        </div>
+        <div class="form-group">
+            <label>Type</label>
+            <input type="text" class="form-control" disabled value="{{$item.Type}}">
+        </div>
+        <div class="form-group">
+            <label>Engine</label>
+            <input type="text" class="form-control" disabled value="{{$item.Engine}}">
+        </div>
+    {{end}}
+    <a type="button" href="/cars" class="btn btn-primary">Back</a>
+</body>
+{{template "footer.html" .}}

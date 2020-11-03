@@ -1,109 +1,94 @@
 package controllers
 
 import (
+	"github.com/revel/revel"
 	"revelSampleApp/app"
 	"revelSampleApp/app/models"
-
-	"github.com/revel/revel"
+	"revelSampleApp/app/services"
+	"strconv"
 )
 
 type Cars struct {
 	*revel.Controller
 }
 
-var cars = []models.Car{
-	models.Car{
-		ID:     1,
-		Name:   "Lamboghini Aventador",
-		Type:   "Automatic",
-		Engine: "6.5L V12 Engine",
-	},
-	models.Car{
-		ID:     2,
-		Name:   "Ford Mustang Shelby GT350",
-		Type:   "Manual",
-		Engine: "5.2L Ti-VCT V8 Engine",
-	},
-	models.Car{
-		ID:     3,
-		Name:   "Nissan GTR 2021",
-		Type:   "Automatic",
-		Engine: "3.8-liter DOHC 24-valve twin-turbocharged V6",
-	},
+func (c Cars) CreateForm() revel.Result {
+	return c.Render()
 }
 
-func (c Cars) List() revel.Result {
-	sql := "SELECT * FROM car"
-	rows, err := app.DB.Query(sql)
+func (c Cars) EditForm() revel.Result {
 
-	if err != nil {
-		return c.NotFound("Could not find car")
-	} else {
-		var cars []models.Car
+	// get id param from url
+	var id = c.Params.Get("id")
 
-		for rows.Next() {
-			var id int64
-			var name string
-			var types string
-			var engine string
+	// convert id to int
+	var idConvert, _ = strconv.Atoi(id)
+	car := services.Get(idConvert)
 
-			err2 := rows.Scan(&id, &name, &types, &engine)
-
-			if err2 != nil {
-				return c.NotFound("Error", nil)
-			} else {
-				car := models.Car{
-					ID:     id,
-					Name:   name,
-					Type:   types,
-					Engine: engine,
-				}
-				cars = append(cars, car)
-			}
-		}
-		return c.RenderJSON(cars)
-	}
+	return c.Render(car)
+	//return c.RenderJSON(car)
 }
 
-func (c Cars) Show(carID int) revel.Result {
-	sql := "SELECT * FROM car where id=?"
-	rows, err := app.DB.Query(sql, carID)
+func (c Cars) RemoveForm() revel.Result {
+	return c.Render()
+}
 
-	if err != nil {
-		return c.NotFound("Could not find car")
-	} else {
-		var cars []models.Car
+func (c Cars) GetAll() revel.Result {
+	db := app.DB
 
-		for rows.Next() {
-			var id int64
-			var name string
-			var types string
-			var engine string
-
-			err2 := rows.Scan(&id, &name, &types, &engine)
-
-			if err2 != nil {
-				return c.NotFound("Error", nil)
-			} else {
-				car := models.Car{
-					ID:     id,
-					Name:   name,
-					Type:   types,
-					Engine: engine,
-				}
-				cars = append(cars, car)
-			}
-		}
-		return c.RenderJSON(cars)
+	if db != nil {
+		cars := services.List()
+		return c.Render(cars)
 	}
-	//var res models.Car
-	//for _, car := range cars {
-	//	if car.ID == carID {
-	//		res = car
-	//	}
-	//}
-	//if res.ID == 0 {
-	//	return c.NotFound("Could not find car")
-	//}
-	//return c.RenderJSON(res)
+
+	return nil
+}
+
+func (c Cars) GetById() revel.Result {
+	db := app.DB
+
+	// get id param from url
+	var id = c.Params.Get("id")
+
+	// convert id to int
+	var idConvert, _ = strconv.Atoi(id)
+
+	if db != nil {
+		car := services.Get(idConvert)
+		return c.Render(car)
+	}
+	return nil
+}
+
+func (c Cars) Create() revel.Result {
+
+	var car models.Car
+	// bind json body => revel can read it
+	_ = c.Params.BindJSON(&car)
+
+	cars := services.Create(car)
+
+	return c.RenderJSON(cars)
+}
+
+func (c Cars) Update() revel.Result {
+
+	var car models.Car
+	// bind json body => revel can read it
+	_ = c.Params.BindJSON(&car)
+
+	cars := services.Update(car)
+
+	return c.RenderJSON(cars)
+}
+
+func (c Cars) Delete() revel.Result {
+
+	var car models.Car
+	// bind json body => revel can read it
+	_ = c.Params.BindJSON(&car)
+
+	cars := services.Delete(car)
+
+	return c.RenderJSON(cars)
 }

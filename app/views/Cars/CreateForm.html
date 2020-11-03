@@ -1,0 +1,25 @@
+{{set . "title" "Home"}}
+{{template "header.html" .}}
+<head>
+    <meta charset="UTF-8">
+    <title>Create</title>
+</head>
+<body>
+    <form method="post">
+        <div class="form-group">
+            <label for="name">Car Name</label>
+            <input type="text" class="form-control" id="name"/>
+        </div>
+        <div class="form-group">
+            <label for="type">Type</label>
+            <input type="text" class="form-control" id="type"/>
+        </div>
+        <div class="form-group">
+            <label for="engine">Engine</label>
+            <input type="text" class="form-control" id="engine"/>
+        </div>
+
+        <button onclick="Create()" type="button" class="btn btn-success">Submit</button>
+    </form>
+</body>
+{{template "footer.html" .}}

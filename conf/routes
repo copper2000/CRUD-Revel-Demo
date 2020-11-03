@@ -7,9 +7,19 @@ module:testrunner
 # module:jobs
 
 
+# HTTP GET
 GET / App.Index
-GET /cars Cars.List
-GET /cars/:carID Cars.Show
+GET /cars Cars.GetAll
+GET /cars/detail/:id Cars.GetById
+GET /cars/insert-form/ Cars.CreateForm
+GET /cars/edit-form/:id Cars.EditForm
+GET /cars/remove-form/:id Cars.RemoveForm
+
+
+# HTTP POST
+POST /cars/create Cars.Create
+POST /cars/update Cars.Update
+POST /cars/delete Cars.Delete
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
