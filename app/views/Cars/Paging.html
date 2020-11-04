@@ -1,0 +1,43 @@
+{{set . "title" "Home"}}
+{{template "header.html" .}}
+<head>
+    <meta charset="UTF-8">
+    <title>List</title>
+</head>
+<body>
+    <br>
+    <a class="btn btn-primary" href="/cars/insert-form">create</a>
+    <br><br>
+    <table class="table table-striped table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Type</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{range  $car := .cars}}
+            <tr>
+                <th scope="row">{{$car.ID}}</th>
+                <td>{{$car.Name}}</td>
+                <td>{{$car.Type}}</td>
+                <td>
+                    <a class="btn btn-warning" type="button" href="/cars/edit-form/{{$car.ID}}">Update</a> &nbsp
+                    <a class="btn btn-info" type="button" href="/cars/detail/{{$car.ID}}">Detail</a> &nbsp
+                    <a class="btn btn-danger" type="button" onclick="Delete({{$car.ID}})">Delete</a>
+                </td>
+            </tr>
+        {{end}}
+        </tbody>
+    </table>
+    <div class="table">
+        {{range $i := .listPage}}
+            <a class="btn btn-primary" href="/cars/paging/{{$i}}/5">{{$i}}</a>
+        {{end}}
+    </div>
+
+</body>
+
+{{template "footer.html" .}}

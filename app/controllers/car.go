@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"github.com/revel/revel"
+	"math"
 	"revelSampleApp/app"
 	"revelSampleApp/app/models"
 	"revelSampleApp/app/services"
@@ -105,6 +106,19 @@ func (c Cars) Paging() revel.Result {
 
 	cars, _ := services.Paging(pageSizeConvert, pageIndexConvert)
 
-	return c.RenderJSON(cars)
+	lstCar := services.List()
+
+	var totalItems = len(lstCar)
+
+	totalPage := int(math.Ceil(float64(totalItems / pageSizeConvert)))
+
+	var listPage []int
+
+	for i := 1; i <= totalPage; i++ {
+		listPage = append(listPage, i)
+	}
+
+	// listPage = append(listPage, pageSizeConvert)
+	return c.Render(cars, listPage, pageSizeConvert)
 
 }

@@ -111,7 +111,7 @@ func Delete(car models.Car) (err error) {
 
 func Paging(pageSize int, pageIndex int) (car []models.Car, err error) {
 	sql := "SELECT * FROM car LIMIT ? OFFSET ?"
-	rows, err := app.DB.Query(sql, pageSize, pageIndex)
+	rows, err := app.DB.Query(sql, pageSize, (pageIndex - 1) * pageSize)
 
 	if err != nil {
 		return nil, err
