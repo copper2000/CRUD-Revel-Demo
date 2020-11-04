@@ -92,3 +92,19 @@ func (c Cars) Delete() revel.Result {
 
 	return c.RenderJSON(cars)
 }
+
+func (c Cars) Paging() revel.Result {
+
+	// get id param from url
+	var pageSize = c.Params.Get("pageSize")
+	var pageIndex = c.Params.Get("pageIndex")
+
+	// convert id to int
+	var pageSizeConvert, _ = strconv.Atoi(pageSize)
+	var pageIndexConvert, _ = strconv.Atoi(pageIndex)
+
+	cars, _ := services.Paging(pageSizeConvert, pageIndexConvert)
+
+	return c.RenderJSON(cars)
+
+}

@@ -5,40 +5,39 @@ package routes
 
 import "github.com/revel/revel"
 
+type tStatic struct{}
 
-type tStatic struct {}
 var Static tStatic
 
-
 func (_ tStatic) Serve(
-		prefix string,
-		filepath string,
-		) string {
+	prefix string,
+	filepath string,
+) string {
 	args := make(map[string]string)
-	
+
 	revel.Unbind(args, "prefix", prefix)
 	revel.Unbind(args, "filepath", filepath)
 	return revel.MainRouter.Reverse("Static.Serve", args).URL
 }
 
 func (_ tStatic) ServeDir(
-		prefix string,
-		filepath string,
-		) string {
+	prefix string,
+	filepath string,
+) string {
 	args := make(map[string]string)
-	
+
 	revel.Unbind(args, "prefix", prefix)
 	revel.Unbind(args, "filepath", filepath)
 	return revel.MainRouter.Reverse("Static.ServeDir", args).URL
 }
 
 func (_ tStatic) ServeModule(
-		moduleName string,
-		prefix string,
-		filepath string,
-		) string {
+	moduleName string,
+	prefix string,
+	filepath string,
+) string {
 	args := make(map[string]string)
-	
+
 	revel.Unbind(args, "moduleName", moduleName)
 	revel.Unbind(args, "prefix", prefix)
 	revel.Unbind(args, "filepath", filepath)
@@ -46,128 +45,118 @@ func (_ tStatic) ServeModule(
 }
 
 func (_ tStatic) ServeModuleDir(
-		moduleName string,
-		prefix string,
-		filepath string,
-		) string {
+	moduleName string,
+	prefix string,
+	filepath string,
+) string {
 	args := make(map[string]string)
-	
+
 	revel.Unbind(args, "moduleName", moduleName)
 	revel.Unbind(args, "prefix", prefix)
 	revel.Unbind(args, "filepath", filepath)
 	return revel.MainRouter.Reverse("Static.ServeModuleDir", args).URL
 }
 
+type tTestRunner struct{}
 
-type tTestRunner struct {}
 var TestRunner tTestRunner
 
-
-func (_ tTestRunner) Index(
-		) string {
+func (_ tTestRunner) Index() string {
 	args := make(map[string]string)
-	
+
 	return revel.MainRouter.Reverse("TestRunner.Index", args).URL
 }
 
 func (_ tTestRunner) Suite(
-		suite string,
-		) string {
+	suite string,
+) string {
 	args := make(map[string]string)
-	
+
 	revel.Unbind(args, "suite", suite)
 	return revel.MainRouter.Reverse("TestRunner.Suite", args).URL
 }
 
 func (_ tTestRunner) Run(
-		suite string,
-		test string,
-		) string {
+	suite string,
+	test string,
+) string {
 	args := make(map[string]string)
-	
+
 	revel.Unbind(args, "suite", suite)
 	revel.Unbind(args, "test", test)
 	return revel.MainRouter.Reverse("TestRunner.Run", args).URL
 }
 
-func (_ tTestRunner) List(
-		) string {
+func (_ tTestRunner) List() string {
 	args := make(map[string]string)
-	
+
 	return revel.MainRouter.Reverse("TestRunner.List", args).URL
 }
 
+type tApp struct{}
 
-type tApp struct {}
 var App tApp
 
-
-func (_ tApp) Index(
-		) string {
+func (_ tApp) Index() string {
 	args := make(map[string]string)
-	
+
 	return revel.MainRouter.Reverse("App.Index", args).URL
 }
 
+type tCars struct{}
 
-type tCars struct {}
 var Cars tCars
 
-
-func (_ tCars) CreateForm(
-		) string {
+func (_ tCars) CreateForm() string {
 	args := make(map[string]string)
-	
+
 	return revel.MainRouter.Reverse("Cars.CreateForm", args).URL
 }
 
-func (_ tCars) EditForm(
-		) string {
+func (_ tCars) EditForm() string {
 	args := make(map[string]string)
-	
+
 	return revel.MainRouter.Reverse("Cars.EditForm", args).URL
 }
 
-func (_ tCars) RemoveForm(
-		) string {
+func (_ tCars) RemoveForm() string {
 	args := make(map[string]string)
-	
+
 	return revel.MainRouter.Reverse("Cars.RemoveForm", args).URL
 }
 
-func (_ tCars) GetAll(
-		) string {
+func (_ tCars) GetAll() string {
 	args := make(map[string]string)
-	
+
 	return revel.MainRouter.Reverse("Cars.GetAll", args).URL
 }
 
-func (_ tCars) GetById(
-		) string {
+func (_ tCars) GetById() string {
 	args := make(map[string]string)
-	
+
 	return revel.MainRouter.Reverse("Cars.GetById", args).URL
 }
 
-func (_ tCars) Create(
-		) string {
+func (_ tCars) Create() string {
 	args := make(map[string]string)
-	
+
 	return revel.MainRouter.Reverse("Cars.Create", args).URL
 }
 
-func (_ tCars) Update(
-		) string {
+func (_ tCars) Update() string {
 	args := make(map[string]string)
-	
+
 	return revel.MainRouter.Reverse("Cars.Update", args).URL
 }
 
-func (_ tCars) Delete(
-		) string {
+func (_ tCars) Delete() string {
 	args := make(map[string]string)
-	
+
 	return revel.MainRouter.Reverse("Cars.Delete", args).URL
 }
 
+func (_ tCars) Paging() string {
+	args := make(map[string]string)
 
+	return revel.MainRouter.Reverse("Cars.Paging", args).URL
+}

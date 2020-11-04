@@ -20,6 +20,7 @@ GET /cars/remove-form/:id Cars.RemoveForm
 POST /cars/create Cars.Create
 POST /cars/update Cars.Update
 POST /cars/delete Cars.Delete
+GET /cars/paging/:pageIndex/:pageSize Cars.Paging
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
